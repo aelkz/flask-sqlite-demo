@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block app_content %}
+<h1 class="text-center">Prüfungen</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Kürzel</th>
+        <th>Vorlesungsname</th>
+        <th>Semester</th>
+        <th>Versuch</th>
+        <th>Note</th>
+        <th>Abschluss</th>
+        <th>Art</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for exam in exams %}
+    <tr>
+        <td>{{exam[0]}}</td>
+        <td>{{exam[1]}}</td>
+        <td>{{exam[2]}}</td>
+        <td>{{exam[3]}}</td>
+        <td>{{exam[4]}}</td>
+        <td>{{"Bachelor" if exam[5]=='b' else "Master"}}</td>
+        <td>{{"Schriftlich" if exam[6]==0 else "Mündlich"}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-3">Bachelor Durchschnittsnote</div>
+    <div class="col-md-9">{{ avg_mark_per_degree[0][1] if avg_mark_per_degree[0][0]=='b' else avg_mark_per_degree[1][1]
+        }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">Master Durchschnittsnote</div>
+    <div class="col-md-9">{{ avg_mark_per_degree[0][1] if avg_mark_per_degree[0][0]=='m' else avg_mark_per_degree[1][1]
+        }}
+    </div>
+</div>
+<br/>
+<a class="btn btn-primary" href="{{ url_for('add_exam')}}" role="button">Prüfung hinzufügen</a>
+{% endblock %}
