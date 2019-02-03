@@ -44,11 +44,8 @@ def view_exams():
     exams = query_db(
         "select shortcut, name, semester, n_tries, mark, degree,kind  "
         "from exam natural join lecture limit 20")
-
-    avg_mark_per_degree = query_db("select * from avg_grade_per_degree")
     return render_template('view_exams.html',
                            exams=exams,
-                           avg_mark_per_degree=avg_mark_per_degree
                            )
 
 

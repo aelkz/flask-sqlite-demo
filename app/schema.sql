@@ -25,10 +25,3 @@ CREATE TABLE IF NOT EXISTS exam
   foreign key (shortcut, semester) references execution (shortcut, semester)
 
 );
-
-CREATE VIEW IF NOT EXISTS avg_grade_per_degree
-AS
-SELECT degree,sum(mark * ects)/sum(ects)
-FROM exam
-       JOIN lecture on exam.shortcut = lecture.shortcut
-group by degree;

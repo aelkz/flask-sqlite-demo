@@ -29,18 +29,6 @@
     {% endfor %}
     </tbody>
 </table>
-<div class="row">
-    <div class="col-md-3">Bachelor Durchschnittsnote</div>
-    <div class="col-md-9">{{ avg_mark_per_degree[0][1] if avg_mark_per_degree[0][0]=='b' else avg_mark_per_degree[1][1]
-        }}
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-3">Master Durchschnittsnote</div>
-    <div class="col-md-9">{{ avg_mark_per_degree[0][1] if avg_mark_per_degree[0][0]=='m' else avg_mark_per_degree[1][1]
-        }}
-    </div>
-</div>
 <br/>
 <a class="btn btn-primary" href="{{ url_for('add_exam')}}" role="button">Prüfung hinzufügen</a>
 {% endblock %}
