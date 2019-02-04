@@ -1,5 +1,7 @@
 from app import (
     app,
+)
+from app.query_helper import (
     init_db
 )
 import os

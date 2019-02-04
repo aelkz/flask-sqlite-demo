@@ -1,4 +1,6 @@
-from flask_wtf import FlaskForm
+from flask_wtf import (
+    FlaskForm
+)
 from wtforms import (
     StringField,
     IntegerField,
@@ -10,7 +12,9 @@ from wtforms.validators import (
     Length,
     ValidationError
 )
-from app import query_db
+from app.query_helper import (
+    query_db
+)
 
 
 class AddLectureForm(FlaskForm):

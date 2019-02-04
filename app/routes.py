@@ -1,18 +1,21 @@
 from app import (
     app,
-    query_db,
-    insert
 )
 from flask import (
     render_template,
     redirect,
     url_for,
-    flash
+    flash,
+    g
 )
 from app.forms import (
     AddLectureForm,
     AddExecutionForm,
     AddExamForm
+)
+from app.query_helper import (
+    query_db,
+    insert
 )
 
 
@@ -94,3 +97,15 @@ def add_execution():
     return render_template('add_execution.html',
                            title="Durchführung",
                            form=form)
+
+
+# administration
+
+@app.teardown_appcontext
+def close_connection(exception):
+    """
+    after each request close active database connection
+    """
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
