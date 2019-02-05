@@ -2,17 +2,17 @@
 {% from "_formhelpers.html" import render_field %}
 
 {% block app_content %}
-<h1 class="text-center">Prüfungen</h1>
+<h1 class="text-center">Exams</h1>
 <table class="table">
     <thead>
     <tr>
-        <th>Kürzel</th>
-        <th>Vorlesungsname</th>
+        <th>Shortcut</th>
+        <th>Lecture</th>
         <th>Semester</th>
-        <th>Versuch</th>
-        <th>Note</th>
-        <th>Abschluss</th>
-        <th>Art</th>
+        <th>Try</th>
+        <th>Grade</th>
+        <th>Degree</th>
+        <th>Kind</th>
     </tr>
     </thead>
     <tbody>
@@ -24,11 +24,30 @@
         <td>{{exam[3]}}</td>
         <td>{{exam[4]}}</td>
         <td>{{"Bachelor" if exam[5]=='b' else "Master"}}</td>
-        <td>{{"Schriftlich" if exam[6]==0 else "Mündlich"}}</td>
+        <td>{{"written" if exam[6]==0 else "oral"}}</td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
+<!--Pagination Buttons-->
+<nav aria-label="...">
+    <ul class="pager">
+        <li class="previous{% if not prev_page %} disabled {% endif %}">
+            <a href="{{ prev_page or '#' }}">
+                <span aria-hidden="true">&larr;</span>
+                {{ 'Previous' }}
+            </a>
+        </li>
+        <li class="next{% if not next_page %} disabled {% endif %}">
+            <a href="{{ next_page or '#' }}">
+                <span aria-hidden="true">&rarr;</span>
+                {{ 'Next' }}
+            </a>
+        </li>
+    </ul>
+</nav>
 <br/>
-<a class="btn btn-primary" href="{{ url_for('add_exam')}}" role="button">Prüfung hinzufügen</a>
+<div class="m-*-auto text-center">
+    <a class="btn btn-primary m-*-auto text-center" href="{{ url_for('add_exam')}}" role="button">Prüfung hinzufügen</a>
+</div>
 {% endblock %}

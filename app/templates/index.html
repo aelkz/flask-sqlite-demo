@@ -1,6 +1,6 @@
 {% extends "bootstrap/base.html" %}
 {% block title %}
-{% if title %}{{ title }} - InfSYS{% else %}Willkommen{% endif %}
+{% if title %}{{ title }} - InfSYS{% else %}Welcome{% endif %}
 {% endblock %}
 {% block navbar %}
 <nav class="navbar navbar-default">
@@ -10,9 +10,9 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('add_lecture')}}">Vorlesungen</a></li>
-                <li><a href="{{ url_for('view_exams')}}">Prüfungen</a></li>
-                <li><a href="{{ url_for('add_execution')}}">Durchführungen</a></li>
+                <li><a href="{{ url_for('add_lecture')}}">Lectures</a></li>
+                <li><a href="{{ url_for('view_exams')}}">Exams</a></li>
+                <li><a href="{{ url_for('add_execution')}}">Executions</a></li>
             </ul>
         </div>
     </div>

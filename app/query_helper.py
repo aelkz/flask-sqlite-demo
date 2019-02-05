@@ -5,6 +5,9 @@ from flask import (
     current_app,
     g
 )
+from math import (
+    ceil
+)
 
 import sqlite3
 
@@ -70,6 +73,39 @@ def init_db():
         db.commit()
 
 
+# pagination
+
+class Pagination:
+
+    def __init__(self, page: int, total_count: int, per_page: int = None):
+        self.page = page
+        self.total_count = total_count
+        conf_per_page = current_app.config['PER_PAGE'] if current_app.config['PER_PAGE'] is not None else 15
+        self.per_page = conf_per_page if per_page is None else per_page
+
+    @property
+    def pages(self) -> int:
+        return int(ceil(self.total_count / float(self.per_page)))
+
+    @property
+    def has_prev(self) -> bool:
+        return self.page > 1
+
+    @property
+    def has_next(self) -> bool:
+        return True if self.page < self.pages else False
+
+    def iter(self, left_edge=2, left_current=2, right_current=5, right_edge=2):
+        last = 0
+        for num in range(1, self.pages + 1):
+            if num <= left_edge or (num > self.page - left_current - 1):
+                if num < self.page + right_current or num > self.pages - right_edge:
+                    if last + 1 != num:
+                        yield None
+                    yield num
+                    last = num
+
+
 # special queries
 
 def get_avg_mark_per_degree():
@@ -78,7 +114,7 @@ def get_avg_mark_per_degree():
     """
     avg_mark_per_degree = query_db(
         "select degree, round((sum(mark * ects) * 1.0) / sum(ects), 1) from exam "
-        "natural join lecture group by degree")
+        "join lecture using (shortcut) group by degree")
     return avg_mark_per_degree
 
 
@@ -89,14 +125,14 @@ def get_lecturer_with_lowest_avg_mark():
     best_lecturer = query_db(
         "select lecturer, min(average) from execution join "
         "(select shortcut, avg(mark) as average from exam group by shortcut) temp "
-        "on execution.shortcut=temp.shortcut;")
+        "using(shortcut);")
 
     return best_lecturer
 
 
 def get_semester_with_lowest_avg_mark(title):
     best_semester = query_db(
-        "select semester, avg(mark) from exam join lecture on exam.shortcut = lecture.shortcut "
+        "select semester, avg(mark) from exam join lecture using(shortcut)"
         "where lecture.name =? group by semester limit 1;", [title])
 
     return best_semester

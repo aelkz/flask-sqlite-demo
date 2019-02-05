@@ -19,26 +19,26 @@ from app.query_helper import (
 
 class AddLectureForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(1, 1024)])
-    shortcut = StringField('Kürzel', validators=[DataRequired(), Length(1, 64)])
+    shortcut = StringField('Shortcut', validators=[DataRequired(), Length(1, 64)])
     ects = IntegerField('ECTS', default=1, validators=[DataRequired()])
-    submit = SubmitField('Erstellen')
+    submit = SubmitField('Submit')
 
     def validate_shortcut(self, shortcut):
         if len(query_db("select * from lecture where shortcut= ? ", (shortcut.data,))) > 0:
-            raise ValidationError("Dieses Kürzel existiert bereits!")
+            raise ValidationError("Shortcut {} already exists!".format(shortcut.data))
 
 
 class AddExecutionForm(FlaskForm):
-    shortcut = SelectField('Kürzel', coerce=str, validators=[DataRequired()])
-    lecturer = StringField('Dozent', validators=[DataRequired()])
+    shortcut = SelectField('Shortcut', coerce=str, validators=[DataRequired()])
+    lecturer = StringField('Lecturer', validators=[DataRequired()])
     semester = IntegerField('Semester', default=1, validators=[DataRequired()])
-    submit = SubmitField('Erstellen')
+    submit = SubmitField('Submit')
 
 
 class AddExamForm(FlaskForm):
-    executions = SelectField('Durchführung', coerce=str, validators=[DataRequired()])
-    n_tries = IntegerField('Versuch', default=1, validators=[DataRequired()])
-    mark = IntegerField('Note', validators=[DataRequired()])
-    degree = SelectField('Abschluss', default='b', choices=[('b', 'Bachelor'), ('m', 'Master')])
-    kind = SelectField('Art', coerce=int, default=0, choices=[(0, 'Schriftlich'), (1, 'Mündlich')])
-    submit = SubmitField('Erstellen')
+    executions = SelectField('Execution', coerce=str, validators=[DataRequired()])
+    n_tries = IntegerField('Try', default=1, validators=[DataRequired()])
+    mark = IntegerField('Grade', validators=[DataRequired()])
+    degree = SelectField('Degree', default='b', choices=[('b', 'Bachelor'), ('m', 'Master')])
+    kind = SelectField('Kind', coerce=int, default=0, choices=[(0, 'written'), (1, 'oral')])
+    submit = SubmitField('Submit')
