@@ -1,5 +1,9 @@
 # flask-sqlite-demo
-A simple Flask web app with raw SQLite3
+A Flask Web App that includes :
+- Bootstrap
+- raw sqlite queries
+- my own pagination
+- some other smaller stuff
 
 # Installation
 - clone this repo
