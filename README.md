@@ -3,7 +3,7 @@ A Flask Web App that includes :
 - Bootstrap
 - raw sqlite queries
 - my own pagination
-- some other smaller stuff
+- some other stuff
 
 # Installation
 - clone this repo
