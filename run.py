@@ -9,4 +9,4 @@ import os
 if __name__ == "__main__":
     if not os.path.isfile('app.db'):
         init_db()
-    app.run(debug=True, port=1337)
+    app.run(debug=True, port=8080)
